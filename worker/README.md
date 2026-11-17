@@ -48,7 +48,7 @@ Note the **Directory (tenant) ID** and **Application (client) ID**.
 ```bash
 pnpm install
 npx wrangler login
-npx wrangler kv namespace create OAUTH_KV     # copy the id it prints
+npx wrangler kv namespace create mstodo-mcp-oauth     # copy the id it prints
 ```
 
 Edit `worker/wrangler.jsonc`:
