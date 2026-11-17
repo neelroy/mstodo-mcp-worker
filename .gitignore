@@ -32,3 +32,9 @@ tokens.json
 *.sw?
 .DS_Store
 
+
+# Cloudflare Worker
+worker/.dev.vars
+worker/.wrangler/
+worker/worker-configuration.d.ts
+.wrangler/

@@ -28,12 +28,14 @@ pnpm start           # Run MCP server directly
 
 ## Architecture Overview
 
-This is a Model Context Protocol (MCP) server that enables AI assistants to interact with Microsoft To Do via the Microsoft Graph API. The codebase follows a modular architecture with four main components:
+This is a Model Context Protocol (MCP) server that enables AI assistants to interact with Microsoft To Do via the Microsoft Graph API. The codebase follows a modular architecture with these components:
 
-1. **MCP Server** (`src/todo-index.ts`): Core server implementing the MCP protocol with 13 tools for Microsoft To Do operations
+1. **Tools** (`src/tools.ts`): The Microsoft To Do tools and Graph helper, shared by the stdio server and the Cloudflare Worker. Must not use Node-only APIs.
+1. **MCP Server** (`src/todo-index.ts`): Local stdio server; registers `auth-status` plus the shared tools
 2. **CLI Wrapper** (`src/cli.ts`): Executable entry point that handles token loading from environment or file
 3. **Auth Server** (`src/auth-server.js`): Express server implementing OAuth 2.0 flow with MSAL
 4. **Config Generator** (`src/create-mcp-config.ts`): Utility to create MCP configuration files
+5. **Cloudflare Worker** (`worker/`): Remote MCP server (Streamable HTTP) with per-user Entra ID sign-in. See `worker/README.md`. Run `pnpm run worker:typecheck` after changes
 
 ### Key Architectural Patterns
 

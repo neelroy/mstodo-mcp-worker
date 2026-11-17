@@ -1,14 +1,14 @@
 {
   "name": "mstodo-mcp-server",
-  "version": "1.1.14",
+  "version": "1.2.0",
   "description": "Microsoft Todo MCP service for Claude and Cursor. Fork of @jhirono/todomcp",
   "main": "dist/todo-index.js",
   "dependencies": {
     "@azure/msal-node": "^3.8.1",
-    "@modelcontextprotocol/sdk": "^1.21.1",
+    "@modelcontextprotocol/sdk": "^1.32.2",
     "dotenv": "^16.6.1",
     "express": "^5.1.0",
-    "zod": "^3.25.76"
+    "zod": "^4.6.7"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -20,16 +20,20 @@
     "setup": "node dist/setup.js",
     "dev": "pnpm run build && node dist/cli.js",
     "create-config": "node dist/create-mcp-config.js",
-    "format": "prettier --write \"src/**/*.{ts,js,json}\" \"*.{json,md}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,js,json}\" \"*.{json,md}\"",
+    "format": "prettier --write \"src/**/*.{ts,js,json}\" \"worker/src/**/*.ts\" \"*.{json,md}\" \"worker/*.md\"",
+    "format:check": "prettier --check \"src/**/*.{ts,js,json}\" \"worker/src/**/*.ts\" \"*.{json,md}\" \"worker/*.md\"",
     "lint": "pnpm run format:check",
     "typecheck": "tsc --noEmit",
-    "check": "pnpm run format:check && pnpm run typecheck",
+    "check": "pnpm run format:check && pnpm run typecheck && pnpm run worker:typecheck",
     "check:fix": "pnpm run format && pnpm run typecheck",
     "ci": "pnpm run check && pnpm run build",
     "precommit": "pnpm run check:fix && pnpm run build",
     "prepublishOnly": "pnpm run ci",
-    "postinstall": "echo 'Run: npx microsoft-todo-mcp-server setup' to configure"
+    "postinstall": "echo 'Run: npx microsoft-todo-mcp-server setup' to configure",
+    "worker:types": "cd worker && wrangler types --strict-vars=false",
+    "worker:typecheck": "pnpm run worker:types && tsc -p worker",
+    "worker:dev": "cd worker && wrangler dev",
+    "worker:deploy": "cd worker && wrangler deploy"
   },
   "repository": {
     "type": "git",
@@ -49,11 +53,17 @@
   },
   "homepage": "https://github.com/jordanburke/microsoft-todo-mcp-server#readme",
   "devDependencies": {
+    "@cloudflare/workers-oauth-provider": "0.2.4",
+    "@cloudflare/workers-types": "^5.20261117.1",
+    "@modelcontextprotocol/server": "2.4.0",
     "@types/express": "^5.0.5",
     "@types/node": "^22.19.0",
+    "agents": "0.33.0",
+    "hono": "4.13.19",
     "prettier": "^3.6.2",
     "tsup": "^8.5.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "4.164.0"
   },
   "type": "module",
   "bin": {

@@ -1,0 +1,27 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "mstodo-mcp",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "durable_objects": {
+    "bindings": [{ "name": "MCP_OBJECT", "class_name": "TodoMCP" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["TodoMCP"] }],
+  "kv_namespaces": [
+    // Create with: npx wrangler kv namespace create OAUTH_KV
+    { "binding": "OAUTH_KV", "id": "REPLACE_WITH_KV_NAMESPACE_ID" }
+  ],
+  "vars": {
+    // Entra ID app registration (Directory/tenant ID and Application/client ID)
+    "ENTRA_TENANT_ID": "REPLACE_WITH_TENANT_ID",
+    "ENTRA_CLIENT_ID": "REPLACE_WITH_CLIENT_ID",
+    // Comma-separated MCP client redirect URIs allowed to connect.
+    // Empty = any client that registers. Claude's is https://claude.ai/api/mcp/auth_callback
+    "ALLOWED_REDIRECT_URIS": "https://claude.ai/api/mcp/auth_callback"
+  },
+  // Secrets (set with `npx wrangler secret put <NAME>`, never in this file):
+  //   ENTRA_CLIENT_SECRET    client secret from the Entra app registration
+  //   COOKIE_ENCRYPTION_KEY  random string, e.g. `openssl rand -hex 32`
+  "observability": { "enabled": true }
+}

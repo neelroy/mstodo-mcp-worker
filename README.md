@@ -6,7 +6,7 @@ A Model Context Protocol (MCP) server that enables AI assistants like Claude and
 
 ## Features
 
-- **16 MCP Tools**: Complete task management including lists, tasks, checklist items, bulk archiving, and organized views
+- **15 MCP Tools**: Complete task management including lists, tasks, checklist items, bulk archiving, and organized views
 - **Task Creation Timestamps**: Surfaces `createdDateTime` on all tasks so you can see when each was added
 - **Smart Organized Views**: Groups task lists by naming patterns, emoji prefixes, and sharing status
 - **Bulk Archive**: Move completed tasks older than N days to an archive list, with dry-run preview
@@ -15,6 +15,10 @@ A Model Context Protocol (MCP) server that enables AI assistants like Claude and
 - **Microsoft Graph API v1.0**: Direct integration with Microsoft's official API
 - **Multi-tenant Support**: Works with personal, work, and school Microsoft accounts
 - **TypeScript + ESM**: Fully typed, modern module system
+
+## Remote deployment (Cloudflare Workers)
+
+The `worker/` folder runs the same tools as a remote MCP server with per-user Microsoft sign-in, so Claude can reach To Do from web, mobile and scheduled tasks without a local process. See [worker/README.md](worker/README.md).
 
 ## Prerequisites
 
